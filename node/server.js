@@ -1,5 +1,29 @@
-// import http from "http";
+const express = require("express");
+const app = express();
+/*
+app.use((req, res, next) => {
+  console.log("<h1>hello world</h1>");
+  next();
+});
+*/
+/*
+app.get("/", (res, req) => {
+  console.log("app.get from root");
+});
 
+app.get("/profile", (res, req) => {
+  console.log("app.get from profile");
+});
+*/
+app.get("/profile", (req, res) => {
+  const user = {
+    name: "sally",
+    hobby: "singing"
+  };
+  res.send(user);
+});
+app.listen(3030);
+/*
 const http = require("http");
 
 const myServer = http.createServer((request, response) => {
@@ -17,3 +41,4 @@ const myServer = http.createServer((request, response) => {
 });
 
 myServer.listen(3000);
+*/
