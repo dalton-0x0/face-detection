@@ -61,6 +61,7 @@ class App extends Component {
       }
     });
   };
+
   calcFaceLocation = responseData => {
     const clarifaiFace =
       responseData.outputs[0].data.regions[0].region_info.bounding_box;
@@ -87,6 +88,29 @@ class App extends Component {
     this.setState({ userInput: e.target.value });
   };
 
+  onButtonSubmit = () => {
+    this.setState({ imageUrl: this.state.userInput });
+    app.models
+      .predict(Clarifai.FACE_DETECT_MODEL, this.state.userInput)
+      .then(response => {
+        if (response) {
+          fetch("http://localhost:3030/image", {
+            method: "put",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              id: this.state.user.id
+            })
+          })
+            .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, { entries: count }));
+            });
+        }
+        this.displayFaceBox(this.calcFaceLocation(response));
+      })
+      .catch(err => console.log(err));
+  };
+  /*
   onButtonSubmit = e => {
     console.log("detect button clicked");
     this.setState({ imageUrl: this.state.userInput });
@@ -95,7 +119,7 @@ class App extends Component {
       .then(response => this.displayFaceBox(this.calcFaceLocation(response)))
       .catch(error => console.log(error));
   };
-
+*/
   onRouteChange = route => {
     if (route === "signout") {
       this.setState({ isSignedIn: false });
