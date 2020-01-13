@@ -6,8 +6,6 @@ CREATE TABLE users (
 	joined TIMESTAMP NOT NULL
 );
 
-SELECT * FROM users;
-
 CREATE TABLE login (
 	id SERIAL PRIMARY KEY,
 	hash VARCHAR(100) NOT NULL,
