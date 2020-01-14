@@ -44,9 +44,9 @@ class App extends Component {
 
   componentDidMount() {
     this.setState({ imageUrl: "http://faces-unplugged.com/img/photo/008.jpg" });
-    fetch("http://localhost:3000/").then(response =>
-      response.json().then(data => console.log(data))
-    );
+    // fetch("http://localhost:3000/").then(response =>
+    //   response.json().then(data => console.log(data))
+    // );
   }
 
   addUser = data => {
