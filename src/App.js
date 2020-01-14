@@ -8,11 +8,7 @@ import { FaceRecognition } from "./components/FaceRecognition/FaceRecognition";
 import SignIn from "./components/SignIn/SignIn";
 import Register from "./components/Register/Register";
 import Particles from "react-particles-js";
-import Clarifai from "clarifai";
-
-const app = new Clarifai.App({
-  apiKey: "8ee434780de44825a764987fa5900c9b"
-});
+// import Clarifai from "clarifai";
 
 const Fragment = React.Fragment;
 const particlesOptions = {
@@ -25,27 +21,30 @@ const particlesOptions = {
   }
 };
 
+const initialState = {
+  userInput: "",
+  imageUrl: "",
+  faceBox: {},
+  route: "signin",
+  isSignedIn: false,
+  user: {
+    id: "",
+    name: "",
+    email: "",
+    entries: 0,
+    joined: ""
+  }
+};
+
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      userInput: "",
-      imageUrl: "",
-      faceBox: {},
-      route: "signin",
-      isSignedIn: false,
-      user: {
-        id: "",
-        name: "",
-        email: "",
-        entries: 0,
-        joined: ""
-      }
-    };
+    this.state = initialState;
   }
+
   componentDidMount() {
     this.setState({ imageUrl: "http://faces-unplugged.com/img/photo/008.jpg" });
-    fetch("http://localhost:3030/").then(response =>
+    fetch("http://localhost:3000/").then(response =>
       response.json().then(data => console.log(data))
     );
   }
@@ -90,8 +89,14 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.userInput });
-    app.models
-      .predict(Clarifai.FACE_DETECT_MODEL, this.state.userInput)
+    fetch("http://localhost:3030/imageurl", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        input: this.state.userInput
+      })
+    })
+      .then(response => response.json())
       .then(response => {
         if (response) {
           fetch("http://localhost:3030/image", {
@@ -104,25 +109,17 @@ class App extends Component {
             .then(response => response.json())
             .then(count => {
               this.setState(Object.assign(this.state.user, { entries: count }));
-            });
+            })
+            .catch(console.log);
         }
         this.displayFaceBox(this.calcFaceLocation(response));
       })
       .catch(err => console.log(err));
   };
-  /*
-  onButtonSubmit = e => {
-    console.log("detect button clicked");
-    this.setState({ imageUrl: this.state.userInput });
-    app.models
-      .predict(Clarifai.FACE_DETECT_MODEL, this.state.userInput)
-      .then(response => this.displayFaceBox(this.calcFaceLocation(response)))
-      .catch(error => console.log(error));
-  };
-*/
+
   onRouteChange = route => {
     if (route === "signout") {
-      this.setState({ isSignedIn: false });
+      this.setState(initialState);
     } else if (route === "home") {
       this.setState({ isSignedIn: true });
     }
