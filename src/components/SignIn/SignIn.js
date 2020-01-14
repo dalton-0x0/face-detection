@@ -9,12 +9,15 @@ class SignIn extends React.Component {
       signInPassword: ""
     };
   }
+
   onEmailChange = e => {
     this.setState({ signInEmail: e.target.value });
   };
+
   onPasswordChange = e => {
     this.setState({ signInPassword: e.target.value });
   };
+
   onSubmitSignIn = () => {
     fetch("http://localhost:3030/signin", {
       method: "post",
@@ -31,10 +34,9 @@ class SignIn extends React.Component {
           this.props.onRouteChange("home");
         }
       });
-    this.props.onRouteChange("home");
   };
   render() {
-    const onRouteChange = this.props;
+    const { onRouteChange } = this.props;
     return (
       <Fragment>
         <article className="br3 ba dark-gray b--white-40 mv4 w-100 w-100-m w-50-l mw6 center shadow-3">
