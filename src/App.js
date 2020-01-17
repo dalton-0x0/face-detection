@@ -12,11 +12,30 @@ import Particles from "react-particles-js";
 
 const Fragment = React.Fragment;
 const particlesOptions = {
-  Number: {
-    value: 90,
-    density: {
-      enable: true,
-      value_area: 800
+  particles: {
+    number: {
+      value: 100
+    },
+    size: {
+      value: 5
+    },
+    line_linked: {
+      shadow: {
+        enable: true,
+        color: "yellow",
+        blur: 2
+      }
+    }
+  },
+  move: {
+    speed: 50
+  },
+  interactivity: {
+    events: {
+      onhover: {
+        enable: true,
+        mode: "repulse"
+      }
     }
   }
 };
