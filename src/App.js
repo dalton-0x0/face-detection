@@ -14,6 +14,18 @@ const Fragment = React.Fragment;
 const particlesOptions = {
   particles: {
     number: {
+      value: 50,
+      density: {
+        enable: false,
+        value_area: 0
+      }
+    }
+  }
+};
+/*
+const particlesOptions = {
+  particles: {
+    number: {
       value: 100
     },
     size: {
@@ -39,7 +51,7 @@ const particlesOptions = {
     }
   }
 };
-
+*/
 const initialState = {
   userInput: "",
   imageUrl: "",
@@ -63,6 +75,7 @@ class App extends Component {
 
   componentDidMount() {
     this.setState({ imageUrl: "http://faces-unplugged.com/img/photo/008.jpg" });
+    // this.setState({ imageUrl: "./assets/default_face.jpg" });
     // fetch("http://localhost:3000/").then(response =>
     //   response.json().then(data => console.log(data))
     // );
