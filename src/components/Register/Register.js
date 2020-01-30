@@ -54,7 +54,7 @@ class Register extends React.Component {
                     Name
                   </label>
                   <input
-                    className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 b--white-90"
+                    className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 b--white-90 white"
                     type="text"
                     name="name"
                     id="name"
@@ -69,7 +69,7 @@ class Register extends React.Component {
                     Email
                   </label>
                   <input
-                    className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 b--white-90"
+                    className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 b--white-90 white"
                     type="email"
                     name="email-address"
                     id="email-address"
@@ -81,7 +81,7 @@ class Register extends React.Component {
                     Password
                   </label>
                   <input
-                    className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 b--white-90"
+                    className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 b--white-90 white"
                     type="password"
                     name="password"
                     id="password"
@@ -92,7 +92,7 @@ class Register extends React.Component {
               <div className="">
                 <input
                   onClick={this.onSubmitRegister}
-                  className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f5 dib white b--white-90"
+                  className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f5 dib b--white-90 white"
                   type="submit"
                   value="Register"
                 />
