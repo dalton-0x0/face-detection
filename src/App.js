@@ -8,46 +8,77 @@ import { FaceRecognition } from "./components/FaceRecognition/FaceRecognition";
 import SignIn from "./components/SignIn/SignIn";
 import Register from "./components/Register/Register";
 import Particles from "react-particles-js";
-import Clarifai from "clarifai";
-
-const app = new Clarifai.App({
-  apiKey: "8ee434780de44825a764987fa5900c9b"
-});
+// import Clarifai from "clarifai";
 
 const Fragment = React.Fragment;
 const particlesOptions = {
-  Number: {
-    value: 90,
-    density: {
-      enable: true,
-      value_area: 800
+  particles: {
+    number: {
+      value: 50,
+      density: {
+        enable: false,
+        value_area: 0
+      }
     }
+  }
+};
+/*
+const particlesOptions = {
+  particles: {
+    number: {
+      value: 100
+    },
+    size: {
+      value: 5
+    },
+    line_linked: {
+      shadow: {
+        enable: true,
+        color: "yellow",
+        blur: 2
+      }
+    }
+  },
+  move: {
+    speed: 50
+  },
+  interactivity: {
+    events: {
+      onhover: {
+        enable: true,
+        mode: "repulse"
+      }
+    }
+  }
+};
+*/
+const initialState = {
+  userInput: "",
+  imageUrl: "",
+  faceBox: {},
+  route: "signin",
+  isSignedIn: false,
+  user: {
+    id: "",
+    name: "",
+    email: "",
+    entries: 0,
+    joined: ""
   }
 };
 
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      userInput: "",
-      imageUrl: "",
-      faceBox: {},
-      route: "signin",
-      isSignedIn: false,
-      user: {
-        id: "",
-        name: "",
-        email: "",
-        entries: 0,
-        joined: ""
-      }
-    };
+    this.state = initialState;
   }
+
   componentDidMount() {
     this.setState({ imageUrl: "http://faces-unplugged.com/img/photo/008.jpg" });
-    fetch("http://localhost:3030/").then(response =>
-      response.json().then(data => console.log(data))
-    );
+    // this.setState({ imageUrl: "./assets/default_face.jpg" });
+    // fetch("http://localhost:3000/").then(response =>
+    //   response.json().then(data => console.log(data))
+    // );
   }
 
   addUser = data => {
@@ -61,6 +92,7 @@ class App extends Component {
       }
     });
   };
+
   calcFaceLocation = responseData => {
     const clarifaiFace =
       responseData.outputs[0].data.regions[0].region_info.bounding_box;
@@ -87,18 +119,39 @@ class App extends Component {
     this.setState({ userInput: e.target.value });
   };
 
-  onButtonSubmit = e => {
-    console.log("detect button clicked");
+  onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.userInput });
-    app.models
-      .predict(Clarifai.FACE_DETECT_MODEL, this.state.userInput)
-      .then(response => this.displayFaceBox(this.calcFaceLocation(response)))
-      .catch(error => console.log(error));
+    fetch("https://rocky-falls-33914.herokuapp.com/imageurl", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        input: this.state.userInput
+      })
+    })
+      .then(response => response.json())
+      .then(response => {
+        if (response) {
+          fetch("https://rocky-falls-33914.herokuapp.com/image", {
+            method: "put",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              id: this.state.user.id
+            })
+          })
+            .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, { entries: count }));
+            })
+            .catch(console.log);
+        }
+        this.displayFaceBox(this.calcFaceLocation(response));
+      })
+      .catch(err => console.log(err));
   };
 
   onRouteChange = route => {
     if (route === "signout") {
-      this.setState({ isSignedIn: false });
+      this.setState(initialState);
     } else if (route === "home") {
       this.setState({ isSignedIn: true });
     }

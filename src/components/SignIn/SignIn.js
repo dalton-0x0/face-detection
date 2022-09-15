@@ -9,14 +9,17 @@ class SignIn extends React.Component {
       signInPassword: ""
     };
   }
+
   onEmailChange = e => {
     this.setState({ signInEmail: e.target.value });
   };
+
   onPasswordChange = e => {
     this.setState({ signInPassword: e.target.value });
   };
+
   onSubmitSignIn = () => {
-    fetch("http://localhost:3030/signin", {
+    fetch("https://rocky-falls-33914.herokuapp.com/signin", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -31,10 +34,9 @@ class SignIn extends React.Component {
           this.props.onRouteChange("home");
         }
       });
-    this.props.onRouteChange("home");
   };
   render() {
-    const onRouteChange = this.props;
+    const { onRouteChange } = this.props;
     return (
       <Fragment>
         <article className="br3 ba dark-gray b--white-40 mv4 w-100 w-100-m w-50-l mw6 center shadow-3">
@@ -50,7 +52,7 @@ class SignIn extends React.Component {
                     Email
                   </label>
                   <input
-                    className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 b--white-90"
+                    className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 b--white-90 white"
                     type="email"
                     name="email-address"
                     id="email-address"
@@ -62,7 +64,7 @@ class SignIn extends React.Component {
                     Password
                   </label>
                   <input
-                    className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 b--white-90"
+                    className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 b--white-90 white"
                     type="password"
                     name="password"
                     id="password"
@@ -77,14 +79,6 @@ class SignIn extends React.Component {
                   type="submit"
                   value="Sign in"
                 />
-              </div>
-              <div className="lh-copy mt3">
-                <p
-                  onClick={() => onRouteChange("register")}
-                  className="f5 link dim white db pointer"
-                >
-                  Register
-                </p>
               </div>
             </div>
           </main>
