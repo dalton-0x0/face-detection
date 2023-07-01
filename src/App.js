@@ -17,10 +17,10 @@ const particlesOptions = {
       value: 50,
       density: {
         enable: false,
-        value_area: 0
-      }
-    }
-  }
+        value_area: 0,
+      },
+    },
+  },
 };
 /*
 const particlesOptions = {
@@ -63,8 +63,8 @@ const initialState = {
     name: "",
     email: "",
     entries: 0,
-    joined: ""
-  }
+    joined: "",
+  },
 };
 
 class App extends Component {
@@ -81,19 +81,19 @@ class App extends Component {
     // );
   }
 
-  addUser = data => {
+  addUser = (data) => {
     this.setState({
       user: {
         id: data.id,
         name: data.name,
         email: data.email,
         entries: data.entries,
-        joined: data.joined
-      }
+        joined: data.joined,
+      },
     });
   };
 
-  calcFaceLocation = responseData => {
+  calcFaceLocation = (responseData) => {
     const clarifaiFace =
       responseData.outputs[0].data.regions[0].region_info.bounding_box;
     console.log(clarifaiFace);
@@ -105,16 +105,16 @@ class App extends Component {
       leftCol: clarifaiFace.left_col * imageWidth,
       topRow: clarifaiFace.top_row * imageHeight,
       rightCol: imageWidth - clarifaiFace.right_col * imageWidth,
-      bottomRow: imageHeight - clarifaiFace.bottom_row * imageHeight
+      bottomRow: imageHeight - clarifaiFace.bottom_row * imageHeight,
     };
   };
 
-  displayFaceBox = boxData => {
+  displayFaceBox = (boxData) => {
     console.log(boxData);
     this.setState({ faceBox: boxData });
   };
 
-  onInputChange = e => {
+  onInputChange = (e) => {
     console.log(e.target.value);
     this.setState({ userInput: e.target.value });
   };
@@ -125,31 +125,31 @@ class App extends Component {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        input: this.state.userInput
-      })
+        input: this.state.userInput,
+      }),
     })
-      .then(response => response.json())
-      .then(response => {
+      .then((response) => response.json())
+      .then((response) => {
         if (response) {
           fetch("https://rocky-falls-33914.herokuapp.com/image", {
             method: "put",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              id: this.state.user.id
-            })
+              id: this.state.user.id,
+            }),
           })
-            .then(response => response.json())
-            .then(count => {
+            .then((response) => response.json())
+            .then((count) => {
               this.setState(Object.assign(this.state.user, { entries: count }));
             })
             .catch(console.log);
         }
         this.displayFaceBox(this.calcFaceLocation(response));
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
-  onRouteChange = route => {
+  onRouteChange = (route) => {
     if (route === "signout") {
       this.setState(initialState);
     } else if (route === "home") {

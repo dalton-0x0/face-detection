@@ -6,15 +6,15 @@ class SignIn extends React.Component {
     super(props);
     this.state = {
       signInEmail: "",
-      signInPassword: ""
+      signInPassword: "",
     };
   }
 
-  onEmailChange = e => {
+  onEmailChange = (e) => {
     this.setState({ signInEmail: e.target.value });
   };
 
-  onPasswordChange = e => {
+  onPasswordChange = (e) => {
     this.setState({ signInPassword: e.target.value });
   };
 
@@ -24,11 +24,11 @@ class SignIn extends React.Component {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: this.state.signInEmail,
-        password: this.state.signInPassword
-      })
+        password: this.state.signInPassword,
+      }),
     })
-      .then(response => response.json())
-      .then(user => {
+      .then((response) => response.json())
+      .then((user) => {
         if (user.id) {
           this.props.addUser(user);
           this.props.onRouteChange("home");
@@ -36,6 +36,7 @@ class SignIn extends React.Component {
       });
   };
   render() {
+    // eslint-disable-next-line
     const { onRouteChange } = this.props;
     return (
       <Fragment>
