@@ -8,7 +8,6 @@ import { FaceRecognition } from "./components/FaceRecognition/FaceRecognition";
 import SignIn from "./components/SignIn/SignIn";
 import Register from "./components/Register/Register";
 import Particles from "react-particles-js";
-// import Clarifai from "clarifai";
 
 const Fragment = React.Fragment;
 const particlesOptions = {
@@ -42,10 +41,6 @@ class App extends Component {
   constructor() {
     super();
     this.state = initialState;
-  }
-
-  componentDidMount() {
-    this.setState({ imageUrl: "http://faces-unplugged.com/img/photo/008.jpg" });
   }
 
   addUser = (data) => {
@@ -88,10 +83,15 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.userInput });
+
     fetch("https://rocky-falls-33914.herokuapp.com/imageurl", {
       method: "post",
       mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST,PATCH,OPTIONS",
+      },
       body: JSON.stringify({
         input: this.state.userInput,
       }),
