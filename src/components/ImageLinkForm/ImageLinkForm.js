@@ -6,7 +6,7 @@ export const ImageLinkForm = ({ onInputChange, onButtonSubmit }) => {
   return (
     <Fragment>
       <div>
-        <p className="f3 white">{`This app will detect one of the faces in your pictures!`}</p>
+        <p className="f3 white">{`Enter your image url for face detection!`}</p>
         <div className="center">
           <div className="form pa4 br shadow-5 center">
             <input

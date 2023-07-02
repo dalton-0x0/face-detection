@@ -44,6 +44,9 @@ class App extends Component {
     this.state = initialState;
   }
 
+  // SAMPLE IMAGE: http://faces-unplugged.com/img/photo/008.jpg
+  // SAMPLE IMAGE: https://res.cloudinary.com/demo/image/upload/coupled.jpg
+
   addUser = (data) => {
     this.setState({
       user: {
@@ -85,14 +88,13 @@ class App extends Component {
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.userInput });
 
+    // https://rocky-falls-33914.herokuapp.com
+
+    // http://localhost:3000
+
     fetch("https://rocky-falls-33914.herokuapp.com/imageurl", {
       method: "post",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "POST,PATCH,OPTIONS",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         input: this.state.userInput,
       }),
@@ -102,7 +104,6 @@ class App extends Component {
         if (response) {
           fetch("https://rocky-falls-33914.herokuapp.com/image", {
             method: "put",
-            mode: "no-cors",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               id: this.state.user.id,
