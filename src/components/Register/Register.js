@@ -7,39 +7,41 @@ class Register extends React.Component {
     this.state = {
       email: "",
       password: "",
-      name: ""
+      name: "",
     };
   }
 
-  onNameChange = e => {
+  onNameChange = (e) => {
     this.setState({ name: e.target.value });
   };
 
-  onEmailChange = e => {
+  onEmailChange = (e) => {
     this.setState({ email: e.target.value });
   };
 
-  onPasswordChange = e => {
+  onPasswordChange = (e) => {
     this.setState({ password: e.target.value });
   };
 
   onSubmitRegister = () => {
     fetch("https://rocky-falls-33914.herokuapp.com/register", {
       method: "post",
+      mode: "no-cors",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: this.state.email,
         password: this.state.password,
-        name: this.state.name
-      })
+        name: this.state.name,
+      }),
     })
-      .then(response => response.json())
-      .then(user => {
+      .then((response) => response.json())
+      .then((user) => {
         if (user.id) {
           this.props.addUser(user);
           this.props.onRouteChange("home");
         }
-      });
+      })
+      .catch(() => this.props.onRouteChange("home"));
   };
   render() {
     return (

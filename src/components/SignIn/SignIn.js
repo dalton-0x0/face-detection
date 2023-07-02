@@ -21,6 +21,7 @@ class SignIn extends React.Component {
   onSubmitSignIn = () => {
     fetch("https://rocky-falls-33914.herokuapp.com/signin", {
       method: "post",
+      mode: "no-cors",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: this.state.signInEmail,
@@ -33,6 +34,9 @@ class SignIn extends React.Component {
           this.props.addUser(user);
           this.props.onRouteChange("home");
         }
+      })
+      .catch(() => {
+        this.props.onRouteChange("home");
       });
   };
   render() {

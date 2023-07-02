@@ -22,39 +22,10 @@ const particlesOptions = {
     },
   },
 };
-/*
-const particlesOptions = {
-  particles: {
-    number: {
-      value: 100
-    },
-    size: {
-      value: 5
-    },
-    line_linked: {
-      shadow: {
-        enable: true,
-        color: "yellow",
-        blur: 2
-      }
-    }
-  },
-  move: {
-    speed: 50
-  },
-  interactivity: {
-    events: {
-      onhover: {
-        enable: true,
-        mode: "repulse"
-      }
-    }
-  }
-};
-*/
+
 const initialState = {
   userInput: "",
-  imageUrl: "",
+  imageUrl: "http://faces-unplugged.com/img/photo/008.jpg",
   faceBox: {},
   route: "signin",
   isSignedIn: false,
@@ -75,10 +46,6 @@ class App extends Component {
 
   componentDidMount() {
     this.setState({ imageUrl: "http://faces-unplugged.com/img/photo/008.jpg" });
-    // this.setState({ imageUrl: "./assets/default_face.jpg" });
-    // fetch("http://localhost:3000/").then(response =>
-    //   response.json().then(data => console.log(data))
-    // );
   }
 
   addUser = (data) => {
@@ -120,9 +87,11 @@ class App extends Component {
   };
 
   onButtonSubmit = () => {
+    console.log("clicked");
     this.setState({ imageUrl: this.state.userInput });
     fetch("https://rocky-falls-33914.herokuapp.com/imageurl", {
       method: "post",
+      mode: "no-cors",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         input: this.state.userInput,
