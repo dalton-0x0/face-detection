@@ -87,7 +87,6 @@ class App extends Component {
   };
 
   onButtonSubmit = () => {
-    console.log("clicked");
     this.setState({ imageUrl: this.state.userInput });
     fetch("https://rocky-falls-33914.herokuapp.com/imageurl", {
       method: "post",
@@ -102,6 +101,7 @@ class App extends Component {
         if (response) {
           fetch("https://rocky-falls-33914.herokuapp.com/image", {
             method: "put",
+            mode: "no-cors",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               id: this.state.user.id,
