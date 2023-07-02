@@ -8,6 +8,7 @@ import { FaceRecognition } from "./components/FaceRecognition/FaceRecognition";
 import SignIn from "./components/SignIn/SignIn";
 import Register from "./components/Register/Register";
 import Particles from "react-particles-js";
+import imageSrc from "./assets/default_face.jpg";
 
 const Fragment = React.Fragment;
 const particlesOptions = {
@@ -24,7 +25,7 @@ const particlesOptions = {
 
 const initialState = {
   userInput: "",
-  imageUrl: "http://faces-unplugged.com/img/photo/008.jpg",
+  imageUrl: imageSrc,
   faceBox: {},
   route: "signin",
   isSignedIn: false,
