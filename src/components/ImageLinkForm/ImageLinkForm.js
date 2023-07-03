@@ -6,7 +6,11 @@ export const ImageLinkForm = ({ onInputChange, onButtonSubmit }) => {
   return (
     <Fragment>
       <div>
-        <p className="f3 white">{`Enter your image url for face detection!`}</p>
+        <p>
+          <span className="f4 white">Enter image url below e.g: </span>
+          <span className="f4 gray">{`https://image-url.com/image.jpg`}</span>
+        </p>
+        <p className="f5 white">Detects only one face if more &#128522;</p>
         <div className="center">
           <div className="form pa4 br shadow-5 center">
             <input
